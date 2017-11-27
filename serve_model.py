@@ -62,6 +62,7 @@ def infer_segments(img, im_softmax, labels, image_shape):
     return scipy.misc.toimage(cv2.addWeighted(img, 1, np.array(street_im), 0.99, 0))
 
 UPLOAD_FOLDER='static/save_images'
+IMAGE_FOLDER='images'
 def load_graph(trained_model):   
 
     with tf.gfile.GFile('SavedModels/optimized_model150/FCNVGG_graph_optimized.pb', 'rb') as f:
@@ -94,7 +95,7 @@ def demo():
 
         sess ,restored_logits, x, keep_prob = app.restored_elements
         
-        test_image = scipy.misc.imresize(scipy.misc.imread(filename), image_shape)
+        test_image = scipy.misc.imresize(scipy.misc.imread(upload_file), image_shape)
         toc = time.time()
         im_softmax = sess.run([(restored_logits)], feed_dict={x: [test_image], keep_prob:1.0 })
         tic = time.time()
